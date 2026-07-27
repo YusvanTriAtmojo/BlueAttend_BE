@@ -128,4 +128,42 @@ class PresensiController extends Controller
             ], 500);
         }
     }
+
+    public function riwayatPresensi(Request $request)
+    {
+        try {
+            $userId = auth()->id();
+
+            $tigaBulanLalu = Carbon::now()->subMonths(3);
+
+            $presensi = Presensi::where('id_user', $userId)
+                ->where('created_at', '>=', $tigaBulanLalu) 
+                ->with(['event:id,nama_event'])
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            $data = $presensi->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'nama_event' => $item->event->nama_event ?? '-', 
+                    'tanggal' => $item->created_at->format('Y-m-d H:i:s')
+                ];
+            });
+
+            return response()->json([
+                'message' => $data->isEmpty()
+                    ? 'Tidak ada riwayat presensi'
+                    : 'Riwayat presensi berhasil diambil',
+                'status_code' => 200,
+                'data' => $data,
+            ], 200);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'status_code' => 500,
+                'data' => null,
+            ], 500);
+        }
+    }
 }
