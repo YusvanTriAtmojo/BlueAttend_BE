@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('alamat', 100);
             $table->string('notlp', 13);
             $table->string('password');
+            $table->string('foto_profile')->nullable();
         });
     }
 
