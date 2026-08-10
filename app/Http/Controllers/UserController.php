@@ -170,4 +170,68 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    public function update(UpdateUserRequest $request, $id)
+    {
+        try {
+            $user = User::find($id);
+
+            if (!$user) {
+                return response()->json([
+                    'message' => 'User tidak ditemukan',
+                    'status_code' => 404,
+                    'data' => null,
+                ], 404);
+            }
+
+            $exists = User::where('id_role', $request->id_role)
+                ->where('nip', $request->nip)
+                ->where('id', '!=', $user->id)
+                ->exists();
+
+            if ($exists) {
+                return response()->json([
+                    'message' => 'NIP sudah digunakan oleh pengguna lain.',
+                    'status_code' => 422,
+                    'data' => null,
+                ], 422);
+            }
+
+            $data = [
+                'id_role'    => $request->id_role,
+                'nama'       => $request->nama,
+                'nip'        => $request->nip,
+                'notlp'      => $request->notlp,
+                'alamat'     => $request->alamat,
+                'email'      => $request->email,
+            ];
+
+            if (!empty($request->password)) {
+                $data['password'] = Hash::make($request->password);
+            }
+
+            $user->update($data);
+
+            return response()->json([
+                'message' => 'Data user berhasil diperbarui',
+                'status_code' => 200,
+                'data' => [
+                    'id'         => $user->id,
+                    'id_role'    => $user->id_role,
+                    'nama'       => $user->nama,
+                    'nip'        => $user->nip,
+                    'notlp'      => $user->notlp,
+                    'alamat'     => $user->alamat,
+                    'email'      => $user->email,
+                ]
+            ], 200);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'status_code' => 500,
+                'message'     => $e->getMessage(),
+                'data'        => null,
+            ], 500);
+        }
+    }
 }
