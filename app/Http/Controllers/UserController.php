@@ -80,4 +80,49 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    public function index(Request $request)
+    {
+        try {
+
+            $query = User::with(['role'])
+            ->where('id_role', 2);
+
+            $data = $query->get();
+
+            if ($data->isEmpty()) {
+                return response()->json([
+                    'message' => 'Tidak ada data user',
+                    'status_code' => 200,
+                    'data' => [],
+                ], 200);
+            }
+
+            $formattedData = $data->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'id_role' => $item->id_role,
+                    'nama_role' => $item->role?->nama_role,
+                    'nama' => $item->nama,
+                    'nip' => $item->nip,
+                    'notlp' => $item->notlp,
+                    'alamat' => $item->alamat,
+                    'email' => $item->email,
+                ];
+            });
+
+            return response()->json([
+                'message' => 'Data user berhasil diambil',
+                'status_code' => 200,
+                'data' => $formattedData,
+            ], 200);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'status_code' => 500,
+                'message' => $e->getMessage(),
+                'data' => null,
+            ], 500);
+        }
+    }
 }
