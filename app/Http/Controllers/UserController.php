@@ -125,4 +125,49 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    public function store(StoreUserRequest $request)
+    {
+        try {
+            $validated = $request->validated();
+
+            $exists = User::where('id_role', $validated['id_role'])
+                ->where('nip', $validated['nip'])
+                ->exists();
+
+            if ($exists) {
+                return response()->json([
+                    'message' => 'NIP sudah digunakan oleh pengguna lain.',
+                    'status_code' => 422,
+                    'data' => null,
+                ], 422);
+            }
+
+            $validated['password'] = Hash::make($validated['password']);
+
+            $user = User::create($validated);
+
+            return response()->json([
+                'message' => 'Data user berhasil ditambahkan',
+                'status_code' => 201,
+                'data' => [
+                    'id'           => $user->id,
+                    'id_role'      => $user->id_role,
+                    'nama_role'    => $user->role?->nama_role,
+                    'nama'         => $user->nama,
+                    'nip'          => $user->nip,
+                    'notlp'        => $user->notlp,
+                    'alamat'       => $user->alamat,
+                    'email'        => $user->email,
+                ],
+            ], 201);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status_code' => 500,
+                'message' => $e->getMessage(),
+                'data' => null,
+            ], 500);
+        }
+    }
 }
