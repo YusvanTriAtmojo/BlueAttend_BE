@@ -234,4 +234,30 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            $user = User::find($id);
+
+            if (!$user) {
+                return response()->json([
+                    'status_code' => 404,
+                    'message' => 'Peserta tidak ditemukan',
+                ], 404);
+            }
+
+            $user->delete();
+
+            return response()->json([
+                'message' => 'Peserta berhasil dihapus',
+                'status_code' => 200,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status_code' => 500,
+                'message'     => $e->getMessage(),
+            ], 500);
+        };
+    }
 }
