@@ -48,7 +48,8 @@ class AuthController extends Controller
             'alamat'  => $user->alamat,
             'email' => $user->email,
             'role'  => $user->role->nama_role,
-            'token' => $token
+            'token' => $token,
+            'foto_profile' => $user->foto_profile ? asset('storage/' . $user->foto_profile) : null,
         ];
 
         return response()->json([
@@ -75,6 +76,7 @@ class AuthController extends Controller
                     'alamat'  => $user->alamat,
                     'email' => $user->email,
                     'role'  => $user->role ? $user->role->nama_role : null,
+                    'foto_profile' => $user->foto_profile ? asset('storage/' . $item->profile) : null,
                 ]
             ], 200);
         } catch (Exception $e) {
