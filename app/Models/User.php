@@ -22,6 +22,7 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'foto_profile',
+        'face_embedding',
     ];
 
     protected $hidden = [
@@ -36,6 +37,10 @@ class User extends Authenticatable implements JWTSubject
             'password' => 'hashed',
         ];
     }
+
+    protected $casts = [
+        'face_embedding' => 'array',
+    ];
 
     public function role()
     {
