@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('notlp', 13);
             $table->string('password');
             $table->string('foto_profile')->nullable();
+            $table->longText('face_embedding')->nullable();
         });
     }
 
