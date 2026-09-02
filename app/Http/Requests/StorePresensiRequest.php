@@ -15,7 +15,6 @@ class StorePresensiRequest extends FormRequest
     {
         return [
             'id_user' => 'required|integer|exists:users,id',
-            'id_event' => 'required|integer|exists:event,id',
         ];
     }
 
@@ -24,8 +23,6 @@ class StorePresensiRequest extends FormRequest
         return [
             'id_user.required' => 'ID User wajib diisi.',
             'id_user.exists'   => 'User tidak ditemukan.',
-            'id_event.required' => 'ID Event wajib diisi.',
-            'id_event.exists'   => 'Event tidak ditemukan.',
         ];
     }
 }
