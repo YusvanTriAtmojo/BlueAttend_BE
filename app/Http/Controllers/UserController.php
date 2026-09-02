@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateByUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 use App\Models\User;
 
 class UserController extends Controller
@@ -259,5 +261,98 @@ class UserController extends Controller
                 'message'     => $e->getMessage(),
             ], 500);
         };
+    }
+    
+    public function updateFace(Request $request)
+    {
+        try {
+            $user = auth()->user();
+
+            $request->validate([
+                'foto_profile' => [
+                    'required',
+                    'image',
+                    'mimes:jpg,jpeg,png',
+                    'max:5120',
+                ],
+                'face_embedding' => [
+                    'required',
+                    'string',
+                ],
+            ]);
+
+            // validasi face embedding
+            $embedding = json_decode(
+                $request->face_embedding,
+                true
+            );
+
+            if (!is_array($embedding)) {
+                return response()->json([
+                    'status_code' => 400,
+                    'message' => 'Face embedding tidak valid',
+                ], 400);
+            }
+
+            // MobileFaceNet dengan 192 nilai.
+            if (count($embedding) !== 192) {
+                return response()->json([
+                    'status_code' => 400,
+                    'message' => 'Dimensi face embedding tidak valid',
+                    'data' => [
+                        'dimension' => count($embedding),
+                        'expected' => 192,
+                    ],
+                ], 400);
+            }
+
+            // cek nilai face embedding berupa angka
+            foreach ($embedding as $value) {
+                if (!is_numeric($value)) {
+                    return response()->json([
+                        'status_code' => 400,
+                        'message' => 'Face embedding mengandung nilai tidak valid',
+                    ], 400);
+                }
+            }
+
+            // menghapus foto lama jika ada
+            if ($user->foto_profile) {
+                Storage::disk('public')->delete(
+                    $user->foto_profile
+                );
+            }
+
+            // simpan foto baru  ke public
+            $fotoPath = $request->file('foto_profile')
+                ->store('profile', 'public');
+
+            // simpan data foto dan embedding ke DB
+            $user->update([
+                'foto_profile' => $fotoPath,
+                'face_embedding' => json_encode(
+                    array_map('floatval', $embedding)
+                ),
+            ]);
+
+            return response()->json([
+                'status_code' => 200,
+                'message' => 'Registrasi wajah berhasil',
+                'data' => [
+                    'foto_profile' => asset(
+                        'storage/' . $fotoPath
+                    ),
+                    'embedding_dimension' => count($embedding),
+                ],
+            ], 200);
+
+        } catch (Exception $e) {
+
+            return response()->json([
+                'status_code' => 500,
+                'message' => 'Terjadi kesalahan',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }
