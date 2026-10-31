@@ -22,7 +22,7 @@ class UpdateByUserRequest extends FormRequest
             'alamat'   => 'sometimes|nullable|string',
             'email'    => 'sometimes|nullable|email|max:255|unique:users,email,' . $id . ',id',
             'password' => 'sometimes|nullable|string|min:6|confirmed',
-            'foto_kerusakan' => 'sometimes|nullable|image|mimes:jpeg,jpg,png',
+            'foto_profile' => 'sometimes|nullable|image|mimes:jpeg,jpg,png',
         ];
     }
 
