@@ -14,9 +14,8 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'id_project' => 'required|exists:project,id',
-            'id_role'    => 'required|exists:roles,id',
-            'name'       => 'required|string|max:30',
+            'id_role'    => 'required|exists:role,id',
+            'nama'       => 'required|string|max:30',
             'nip'        => 'required|string|max:20',
             'notlp'      => 'required|string|max:13|regex:/^[0-9]{1,13}$/',
             'alamat'     => 'required|string|max:50',
@@ -28,15 +27,13 @@ class UpdateUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'id_project.required' => 'Project wajib dipilih.',
-            'id_project.exists' => 'Project tidak ditemukan.',
 
             'id_role.required' => 'Role wajib dipilih.',
             'id_role.exists' => 'Role tidak ditemukan.',
 
-            'name.required' => 'Nama user wajib diisi.',
-            'name.string' => 'Nama user harus berupa teks.',
-            'name.max' => 'Nama user maksimal 30 karakter.',
+            'nama.required' => 'Nama user wajib diisi.',
+            'nama.string' => 'Nama user harus berupa teks.',
+            'nama.max' => 'Nama user maksimal 30 karakter.',
 
             'nip.required' => 'NIP wajib diisi.',
             'nip.string' => 'NIP harus berupa teks.',
