@@ -23,8 +23,28 @@ class PresensiController extends Controller
             $idUser = $request->id_user;
             $token = $request->token;
             $area = $request->area;
-            $ble = (array) $request->service_uuid;
             $bleKey = $request->data;
+            $ble = $request->service_uuid;
+
+            if (is_string($ble)) {
+                $ble = json_decode($ble, true);
+            }
+
+            if (!is_array($ble)) {
+                return response()->json([
+                    'message' => 'Service UUID tidak valid',
+                    'status_code' => 400,
+                    'data' => [
+                        'service_uuid' => $request->service_uuid,
+                    ],
+                ], 400);
+            }
+
+            // Normalisasi UUID
+            $ble = array_map(
+                fn ($uuid) => strtolower(trim((string) $uuid)),
+                $ble
+            );
 
             // mencari event dari token
             $event = Event::with('ble')
@@ -337,6 +357,56 @@ class PresensiController extends Controller
                 'message' => $e->getMessage(),
                 'status_code' => 500,
                 'data' => null,
+            ], 500);
+        }
+    }
+
+    public function index()
+    {
+        try {
+            $data = Presensi::with([
+                'user:id,nama',
+                'event:id,nama_event'
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+            if ($data->isEmpty()) {
+                return response()->json([
+                    'message' => 'Tidak ada data Presensi',
+                    'status_code' => 200,
+                    'data' => [],
+                ], 200);
+            }
+
+            $formattedData = $data->map(function ($item) {
+                return [
+                    'id'          => $item->id,
+                    'nama_user'   => $item->user->nama ?? '-',
+                    'nama_event'  => $item->event->nama_event ?? '-',
+                    'tanggal'    => $item->created_at
+                            ? $item->created_at->format('Y-m-d')
+                            : null,
+                    'jam'         => $item->created_at
+                                        ? $item->created_at->format('H:i:s')
+                                        : null,
+                    'created_at'  => $item->created_at
+                                        ? $item->created_at->format('Y-m-d')
+                                        : null,
+                ];
+            });
+
+            return response()->json([
+                'message' => 'Data Presensi berhasil diambil',
+                'status_code' => 200,
+                'data' => $formattedData,
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status_code' => 500,
+                'message'     => $e->getMessage(),
+                'data'        => null,
             ], 500);
         }
     }
