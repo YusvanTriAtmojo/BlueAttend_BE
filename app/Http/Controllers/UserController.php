@@ -31,7 +31,7 @@ class UserController extends Controller
                 'notlp'    => $user->notlp,
                 'alamat'   => $user->alamat,
                 'email'    => $user->email,
-                'foto_profile'=> $item->foto_profile ? asset('storage/' . $item->foto_profile) : null,
+                'foto_profile'=> $user->foto_profile ? asset('storage/' . $user->foto_profile) : null,
             ],
         ]);
     }
@@ -342,7 +342,7 @@ class UserController extends Controller
                     'foto_profile' => asset(
                         'storage/' . $fotoPath
                     ),
-                    'embedding_dimension' => count($embedding),
+                    'embedding' => count($embedding),
                 ],
             ], 200);
 
