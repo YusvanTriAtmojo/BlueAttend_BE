@@ -12,10 +12,10 @@ defineProps({
 });
 
 const colors = {
-    primary: "bg-blue-600 hover:bg-blue-700 text-white",
-    success: "bg-green-600 hover:bg-green-700 text-white",
-    danger: "bg-red-600 hover:bg-red-700 text-white",
-    warning: "bg-yellow-500 hover:bg-yellow-600 text-white",
+    primary: "bg-indigo-600 hover:bg-indigo-700 text-white",
+    success: "bg-teal-600 hover:bg-teal-700 text-white",
+    danger: "bg-rose-600 hover:bg-rose-700 text-white",
+    warning: "bg-amber-500 hover:bg-amber-600 text-white",
     secondary: "bg-slate-200 hover:bg-slate-300 text-slate-700",
 };
 
