@@ -1,3 +1,4 @@
+
 @import "tailwindcss";
 
 /* Aktifkan dark mode berbasis class */
@@ -23,4 +24,47 @@
         "Segoe UI Emoji",
         "Segoe UI Symbol",
         "Noto Color Emoji";
+
+    --color-primary: #6c9bd2;
+    --color-primary-hover: #5b8bc2;
+    --color-primary-light: #dbeafe;
+    --color-primary-gradient: #8db8e8;
+
+    --color-success: #0d9488;
+    --color-success-hover: #0f766e;
+    --color-danger: #e11d48;
+    --color-danger-hover: #be123c;
+    --color-warning: #f59e0b;
+    --color-warning-hover: #d97706;
+
+    --color-secondary: #e2e8f0;
+    --color-secondary-hover: #cbd5e1;
+    --color-secondary-text: #334155;
+
+    --color-surface: #ffffff;
+    --color-surface-hover: #f8fafc;
+    --color-border: #e2e8f0;
+
+    --color-text-primary: #1e293b;
+    --color-text-secondary: #64748b;
+    --color-text-muted: #94a3b8;
+
+    --color-dark-surface: #0f172a;
+    --color-dark-surface-hover: #1e293b;
+    --color-dark-border: #1e293b;
+
+    --color-dark-text-primary: #ffffff;
+    --color-dark-text-secondary: #cbd5e1;
+    --color-dark-text-muted: #94a3b8;
+
+    --color-icon-sun: #facc15;
+
+    --color-sidebar-text: #ffffff;
+    --color-sidebar-text-muted: #dbeafe;
+    --color-sidebar-border: rgba(255, 255, 255, 0.2);
+    --color-sidebar-hover: rgba(255, 255, 255, 0.15);
+
+    --color-stat-green: #22c55e;
+    --color-stat-yellow: #eab308;
+    --color-stat-red: #ef4444;
 }
