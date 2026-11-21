@@ -6,6 +6,7 @@ use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\BleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\DashboardController;
 use App\Models\Role;
 
 
@@ -17,10 +18,13 @@ Route::middleware('auth:api', 'role:peserta')->group(function () {
     Route::get('/presensi/riwayat', [PresensiController::class, 'riwayatPresensi']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/face/register', [UserController::class, 'updateFace']);
+    Route::get('/peserta/profile', [UserController::class, 'getProfile']);
+    Route::put('/peserta/update', [UserController::class, 'updateByUserId']);
 });
 
 Route::middleware('auth:api', 'role:admin')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::post('/ble', [BleController::class, 'store']);
     Route::get('/ble', [BleController::class, 'index']);
     Route::put('/ble/{id}', [BleController::class, 'update']);
@@ -33,4 +37,5 @@ Route::middleware('auth:api', 'role:admin')->group(function () {
     Route::get('/peserta', [UserController::class, 'index']);
     Route::put('/peserta/{id}', [UserController::class, 'update']);
     Route::delete('/peserta/{id}', [UserController::class, 'destroy']);
+    Route::get('/presensi', [PresensiController::class, 'index']);
 });
