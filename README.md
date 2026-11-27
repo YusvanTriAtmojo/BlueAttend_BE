@@ -44,3 +44,29 @@ Berikut adalah relasi antar tabel yang digunakan pada sistem Blueattend:
 </p>
 
 ---
+
+## 🖥️ Website Admin
+
+Berikut adalah beberapa tampilan dari website manajemen Blueattend:
+
+<p align="center">
+  <img src="assets/web1.png" alt="BlueAttend Admin Dashboard" width="850">
+</p>
+
+<p align="center">
+  <img src="assets/web2.png" alt="BlueAttend Admin Dashboard" width="850">
+</p>
+
+<p align="center">
+  <img src="assets/web3.png" alt="BlueAttend Admin Dashboard" width="850">
+</p>
+
+<p align="center">
+  <img src="assets/web4.png" alt="BlueAttend Admin Dashboard" width="850">
+</p>
+
+<p align="center">
+  <img src="assets/web5.png" alt="BlueAttend Admin Dashboard" width="850">
+</p>
+
+---
