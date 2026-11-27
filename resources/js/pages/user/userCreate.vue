@@ -68,7 +68,7 @@ const simpanUser = async () => {
         console.error(error);
         tampilkanNotifikasi(
             "error",
-            "Gagal Menambahkan User",
+            "Gagal Menambahkan Peserta",
             ambilPesanError(error)
         );
     } finally {
@@ -82,10 +82,10 @@ const simpanUser = async () => {
         <div class="max-w-3xl mx-auto space-y-6">
             <div>
                 <h1 class="text-2xl font-bold dark:text-white">
-                    Tambah User
+                    Tambah Peserta
                 </h1>
                 <p class="text-slate-500 dark:text-slate-400">
-                    Tambahkan data user pegawai.
+                    Tambahkan data peserta.
                 </p>
             </div>
 
@@ -228,7 +228,7 @@ const simpanUser = async () => {
                             @click="tutupNotifikasi">
                             {{
                                 redirectAfterClose
-                                    ? "Kembali ke Data User"
+                                    ? "Kembali ke Data Peserta"
                                     : "Mengerti"
                             }}
                         </AppButton>

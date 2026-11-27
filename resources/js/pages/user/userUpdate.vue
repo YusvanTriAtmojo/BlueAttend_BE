@@ -125,10 +125,10 @@ onMounted(() => {
         <div class="max-w-2xl mx-auto space-y-6">
             <div>
                 <h1 class="text-2xl font-bold dark:text-white">
-                    Edit User
+                    Edit Peserta
                 </h1>
                 <p class="text-slate-500 dark:text-slate-400">
-                    Ubah data user pegawai.
+                    Ubah data peserta.
                 </p>
             </div>
             <div class="bg-white dark:bg-slate-800 rounded-xl shadow p-6 space-y-5">
@@ -275,7 +275,7 @@ onMounted(() => {
                             @click="tutupNotifikasi">
                             {{
                                 redirectAfterClose
-                                    ? "Kembali ke Data User"
+                                    ? "Kembali ke Data Peserta"
                                     : "Mengerti"
                             }}
                         </AppButton>
