@@ -13,7 +13,7 @@ class DashboardController extends Controller
     {
         $presensiTerbaru = Presensi::with([
             'user:id,nama',
-            'event:id,nama',
+            'event:id,nama_event',
         ])
             ->whereDate('created_at', today())
             ->latest()
